@@ -1,88 +1,106 @@
-import React from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
+import React from 'react';
+import Layout from '../components/Layout';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
-    <Nav />
-
-    <div className="hero">
-      <h1 className="title">Welcome to Next.js!</h1>
-      <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
-      </p>
-
-      <div className="row">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Learn more about Next.js in the documentation.</p>
-        </a>
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Next.js Learn &rarr;</h3>
-          <p>Learn about Next.js by following an interactive tutorial!</p>
-        </a>
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Find other example boilerplates on the Next.js GitHub.</p>
-        </a>
-      </div>
-    </div>
-
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
+  <Layout>
+  <div className="bg-hero">
+  <Container fixed className="flex-mid">
+  <Grid container spacing={3} alignContent="center" alignItems="center">
+  <Grid item xs={12} md={6}>
+  <h1 className="heading">The Future of Web Coding is here.</h1>
+  <p className="short-paragraph">Kergan delivers low-touch compliance solutions to HR and Education teams in healthcare, freeing you up to do the work that only you can.
+  </p>
+  <div className="but-hero">
+  <a href="#" className="button2 margin-left w-button">GET STARTED</a>
+  <a href="#" className="button2 ghost hero w-button">LEARN MORE</a>
   </div>
+  </Grid>
+  <Grid item xs={12} sm={6}>
+  <img src="/hero2.png" width="549"/>
+  </Grid>
+  </Grid>
+  </Container>
+  </div>
+  <h1>This is HomePage</h1>
+  <style jsx>{`
+  .bg-hero {
+    background-image: url(/bg-hero.jpg);
+    background-position: 0px 0px;
+    background-size: cover;
+    min-height: 100vh;
+    overflow: hidden;
+    padding-top:100px;
+    display:flex;
+  }
+  h1.heading {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-size: 52px;
+    font-family: Montserrat, sans-serif;
+    color: #333;
+    line-height: 1.25;
+    font-weight: 800;
+  }
+  .short-paragraph {
+    width: 75%;
+    margin-right: auto;
+    margin-left: 0px;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 10px;
+    line-height:1.5;
+}
+.but-hero{
+  margin-top: 40px;
+}
+.button2 {
+  padding: 10px 25px;
+  border: 1px solid #096ad0;
+  border-radius: 40px;
+  background-color: hsla(230.22471910112358, 88.12%, 60.39%, 1.00);
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+  color: white;
+  line-height: inherit;
+  text-decoration: none;
+}
+.button2.margin-left {
+  margin-right: 20px;
+  font-weight: 700;
+}
+.button2.ghost {
+  border-style: solid;
+  border-width: 1px;
+  border-color: hsla(230.22471910112358, 88.12%, 60.39%, 1.00);
+  background-color: transparent;
+  box-shadow: none;
+  color: hsla(230.22471910112358, 88.12%, 60.39%, 1.00);
+  font-weight: 700;
+}
+.button2:hover {
+  border: 1px solid #096ad0;
+  background-color: hsla(230.22471910112358, 58.87%, 48.68%, 1.00);
+  color: #fff;
+}
+.button2.ghost:hover {
+  background-color: hsla(230.22471910112358, 88.12%, 60.39%, 1.00);
+  background-image: none;
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+  color: #fff;
+}
+  `}</style>
+    </Layout>
 )
 
 export default Home
