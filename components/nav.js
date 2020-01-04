@@ -1,14 +1,28 @@
 import { slide as Menu } from 'react-burger-menu'
 import ActiveLink from './ActiveLink/ActiveLink';
 import Button from '@material-ui/core/Button';
+import {withRouter} from 'next/router';
 
-const NAV = () => {
+const NAV = (props) => {
   const items = [
     {id:1, link:'/', label:'Home'},
     {id:2, link:'/work', label:'Work'},
     {id:3, link:'/about', label:'About'},
     {id:4, link:'/contact', label:'Contact'},
   ]
+let isLogged;
+if(typeof window !== 'undefined') {
+  //isLogged = true
+  isLogged = localStorage.getItem('loggedIn')
+} else {
+  isLogged = false }
+
+const handleLog = () => {
+  localStorage.removeItem('loggedIn');
+  localStorage.removeItem('token');
+  localStorage.removeItem('niceName');
+  props.router.push(`/login`,`/login`);
+}
     return (
     <div className="main-nav">
     <ul className="menu-ul desktop-show">
@@ -20,6 +34,13 @@ const NAV = () => {
         </li></a>
         </ActiveLink>)
       }
+      {isLogged ? <li className="logout-link" onClick={handleLog}>LogOut</li> : 
+      <ActiveLink activeClassName="nav-active" href='/login'>
+      <a>
+      <span>
+      <li>Login</li>
+      </span>
+      </a></ActiveLink>}
       </ul>
 
     <div className="mobile-show">
@@ -32,6 +53,13 @@ const NAV = () => {
       </a>
       </ActiveLink>)
     }
+    {isLogged ? <a className="menu-item" onClick={handleLog}><span>LogOut</span></a> : 
+      <ActiveLink activeClassName="nav-active" href='/login'>
+      <a className="menu-item">
+      <span>
+      Login
+      </span>
+      </a></ActiveLink>}
       </Menu>
     </div>
     <style jsx global>{`
@@ -110,9 +138,12 @@ const NAV = () => {
     `}
 </style>
 <style jsx>{`
-    div.main-nav {
-        float:right;
-    }
+  .logout-link {
+    cursor:pointer;
+  }
+  .logout-link:hover {
+    color: #f7941e!important;
+  }
     ul.desktop-show {
       list-style:none;
       height: 90px;
@@ -138,4 +169,4 @@ const NAV = () => {
     </div>
     );
 }
-export default NAV;
+export default (withRouter(NAV));

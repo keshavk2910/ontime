@@ -14,16 +14,8 @@ const Header = () => {
       top: 0;
       left: 0;
       right: 0;
+      display:flex;
     }
-      header::after {
-        content:'';
-        clear: both;
-        display: table;
-      }
-      .head-wrapper {
-        width: 1250px;
-        margin: 0 auto;
-      }
     `}</style>
     </header>
 }

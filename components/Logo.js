@@ -6,7 +6,6 @@ const Logo = () => {
     <style jsx>{`
     .main-logo {
       margin:20px 10px;
-      float:left;
     }
     img{
         max-width: 100%;
