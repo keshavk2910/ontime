@@ -1,6 +1,5 @@
 import { slide as Menu } from 'react-burger-menu'
 import ActiveLink from './ActiveLink/ActiveLink';
-import Button from '@material-ui/core/Button';
 import {withRouter} from 'next/router';
 
 const NAV = (props) => {
