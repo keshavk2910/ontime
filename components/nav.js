@@ -6,8 +6,9 @@ const NAV = (props) => {
   const items = [
     {id:1, link:'/', label:'Home'},
     {id:2, link:'/work', label:'Work'},
-    {id:3, link:'/about', label:'About'},
-    {id:4, link:'/contact', label:'Contact'},
+    {id:3, link:'/products', label:'Products'},
+    {id:4, link:'/about', label:'About'},
+    {id:5, link:'/contact', label:'Contact'},
   ]
 let isLogged;
 if(typeof window !== 'undefined') {

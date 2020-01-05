@@ -3,6 +3,7 @@ import LoginForm from '../components/LoginForm';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import {withRouter} from 'next/router';
+import clientConfig from '../config';
 
 class login extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class login extends Component {
 
     onFormSubmit = () => {
         event.preventDefault();
-        const URL = 'https://backend.ontimewebservices.com';
+        const URL = clientConfig.siteUrl;
 
         const loginData = {
             username:this.state.username,

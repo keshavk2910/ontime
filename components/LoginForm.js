@@ -1,7 +1,6 @@
 
 
 const LoginForm = (props) => {
-    console.log(props)
     const { username, password } = props.state;
      return (
         <form onSubmit={props.submit}>
