@@ -2,7 +2,9 @@ import React from 'react'
 import App from 'next/app'
 import Router from 'next/router'
 import NProgress from 'nprogress'
-
+import { Provider } from "react-redux";
+import { makeStore } from "../redux/store";
+import withRedux from "next-redux-wrapper";
 let cachedScrollPositions = [];
 
 Router.events.on('routeChangeStart', url => {
@@ -12,6 +14,21 @@ Router.events.on('routeChangeComplete', () => NProgress.done(true))
 Router.events.on('routeChangeError', () => NProgress.done())
 
 class MyApp extends App {
+
+  static async getInitialProps({Component, ctx}) {
+
+    return {
+        pageProps: {
+            // Call page-level getInitialProps
+            ...(Component.getInitialProps ? await Component.getInitialProps(ctx) : {})
+        }
+    };
+
+}
+
+progress = () =>{
+  NProgress.start()
+}
 
     componentDidMount() {
         if ('scrollRestoration' in window.history) {
@@ -42,9 +59,11 @@ class MyApp extends App {
 }
 
     render() {
-        const {Component, pageProps} = this.props;
-        return <Component {...pageProps} />
+        const {Component, pageProps, store} = this.props;
+        return <Provider store={store}>
+          <Component {...pageProps} />
+          </Provider>
       }
 }
 
-export default MyApp;
+export default withRedux(makeStore, {storeKey: 'cart'})(MyApp);

@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const wooConfig = require( './wooConfig' );
 
-fetch(`${wooConfig.graphqlUrl}/graphql`, {
+fetch(`${wooConfig.graphqlUrl}`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({

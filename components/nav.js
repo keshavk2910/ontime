@@ -86,7 +86,7 @@ const handleLog = () => {
       font-weight: 700;
       text-transform: uppercase;
       text-decoration:none;
-      font-family:"Neue Einstellung Bold" !important;
+      font-family:"Roboto", Arial, Helvetica !important;
       color: #000;
     }
     .bm-menu a:hover,
@@ -154,7 +154,7 @@ const handleLog = () => {
       padding: 10px 20px;
       font-size: 18px;
       font-weight: 500;
-      font-family:"Roboto" !important;
+      font-family:"Roboto", Arial, Helvetica !important;
       color: #000;
       transition: all 0.2s;
     }

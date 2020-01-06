@@ -9,7 +9,7 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
     <div className='card-container'>
     <Link href={`/product/[id]`} as={`/product/${post.slug}`}>
     <a>
-        <h1 key={post.productId}>{post.name}</h1>
+        <h1 key={post.productId} className="product-title">{post.name}</h1>
             {post.image ?
               <div className="maximg"><img
               alt={post.name}
@@ -22,6 +22,9 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
     </div>
     
     <style jsx>{`
+    .price, .content, .product-title {
+      font-family:"Roboto", Arial, Helvetica !important;
+    }
     a {
       text-decoration:none;
       color:#000

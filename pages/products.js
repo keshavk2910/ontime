@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import ProductCardList from '../components/ProductsList/ProductCard-List'
 
 const PRODUCTS_QUERY = gql `query{
-  products(first: 5) {
+  products(first: 10) {
     nodes {
       description
       image {
