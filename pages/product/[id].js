@@ -5,8 +5,18 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Link from 'next/link';
 import client from './../../components/ApolloClient'
 import gql from 'graphql-tag';
+import { connect } from "react-redux";
 
-const Product = ({product}) => {
+const Product = ({product, dispatch, currentProducts}) => {
+  
+  let handleAdd = () => {
+    dispatch({type: 'ADD_PRODUCT_TO_CART', payload: product});
+  }
+  let handleRemove = () => {
+    dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: product.productId});
+  }
+  const existingInCart = currentProducts.find(currentProduct => currentProduct.productId === product.productId)
+
 const productCat = product.productCategories.nodes;
 
   return  <Layout>
@@ -21,6 +31,9 @@ const productCat = product.productCategories.nodes;
         : null}
       <div className="price">{product.price}</div>
       <div dangerouslySetInnerHTML={{ __html: product.description }} />
+      {existingInCart ? 
+      <><Button variant="contained" color="secondary" onClick={handleRemove} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button></>
+     : <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>}
       <div className="categories">{productCat.map( cat =>
         <Link key={cat.productCategoryId} href={`/product-category/[id]`} as={`/product-category/${cat.slug}`}><a>{cat.name}</a></Link>
       )}
@@ -82,5 +95,8 @@ Product.getInitialProps = async function(context) {
     }
 };
 
+const mapStateToProps = ({products}) => ({
+  currentProducts: products.currentProducts
+});
 
-export default Product;
+export default connect(mapStateToProps)(Product);

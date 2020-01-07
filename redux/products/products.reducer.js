@@ -15,7 +15,7 @@ const productsReducer = (state = initstate, action) => {
                 return {
                     ...state,
                     currentProducts: [
-                        ...state.currentProducts.filter(currentProduct => currentProduct.id !== action.payload)
+                        ...state.currentProducts.filter(currentProduct => currentProduct.productId !== action.payload)
                 ]
                 }
         default: 

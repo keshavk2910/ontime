@@ -2,8 +2,20 @@ import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import {connect} from "react-redux";
 
 const ProductCard = ({post, dispatch, currentProducts}) => {
+
+  let handleAdd = () => {
+    dispatch({type: 'ADD_PRODUCT_TO_CART', payload: post});
+  }
+
+  let handleRemove = () => {
+    dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: post.productId});
+  }
+
+  const existingInCart = currentProducts.find(currentProduct => currentProduct.productId === post.productId)
+
     return (
         <React.Fragment>
     <div className='card-container'>
@@ -19,6 +31,9 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
             </Link>
             {post.price ? <h3 className="price">{post.price}</h3> :""}
             {post.description ?<div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />:""}
+            {existingInCart ? 
+      <><Button variant="contained" color="secondary" onClick={handleRemove} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button></>
+     : <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>}
     </div>
     
     <style jsx>{`
@@ -69,5 +84,8 @@ const ProductCard = ({post, dispatch, currentProducts}) => {
     );
     }
 
+    const mapStateToProps = ({products}) => ({
+      currentProducts: products.currentProducts
+    });
 
-export default ProductCard;
+export default connect(mapStateToProps)(ProductCard);

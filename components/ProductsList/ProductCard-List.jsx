@@ -12,7 +12,7 @@ const ProductCardList = ({posts, dispatch}) => {
         posts.map(post => 
           <Grow key={ post.productId } in={true}>
           <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
-          <ProductCard post={post}/>
+          <ProductCard post={post} dispatch={dispatch}/>
           </Grid>
           </Grow>
             )
