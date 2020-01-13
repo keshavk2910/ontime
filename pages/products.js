@@ -1,49 +1,46 @@
 import Layout from '../components/Layout';
-import client from './../components/ApolloClient'
-import gql from 'graphql-tag';
 import ProductCardList from '../components/ProductsList/ProductCard-List'
 import {connect} from "react-redux";
-
-const PRODUCTS_QUERY = gql `query{
-  products(first: 10) {
-    nodes {
-      description
-      image {
-        sourceUrl
-      }
-      name
-      productId
-      slug
-      ... on SimpleProduct {
-        price
-      }
-      ... on VariableProduct {
-        price
-      }
-      ... on ExternalProduct {
-        price
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPreviousPage
-      startCursor
-    }
-  }
-}`
+import fetch from 'isomorphic-unfetch';
+import Pagination from "react-js-pagination";
+import {withRouter} from 'next/router'
 
 const Products = (props) => {
+  let handlePageClick = pageNumber => {
+    console.log('running')
+    if(props.router.query.page == pageNumber){
+    } else {
+        props.router.push(`/products?page=${pageNumber}`,`/products?page=${pageNumber}`);
+  }
+  };
     return <Layout>
     <div className="top-pad">
+    <Pagination
+          activePage={props.page}
+          itemsCountPerPage={12}
+          totalItemsCount={Number(props.items)}
+          pageRangeDisplayed={5}
+          onChange={handlePageClick}
+        />
     <ProductCardList posts={props.products} dispatch={props.dispatch}/> 
+    
     </div>
     </Layout>
 }
-Products.getInitialProps = async () => {
-    const result = await client.query( {query: PRODUCTS_QUERY} );
+Products.getInitialProps = async function(context) {
+    const { page } = context.query;
+    let res;
+      if(page){
+        res = await fetch(`http://localhost:3000/getProducts?per_page=12&status=publish&page=${page}`)
+      } else {
+        res = await fetch(`http://localhost:3000/getProducts?per_page=12&status=publish`)
+      }
+    const items = await res.headers.get('Total-Products');
+    const data = await res.json();
     return {
-        products:result.data.products.nodes
+        products:data,
+        items,
+        page
     }
 }
-export default connect(null)(Products);
+export default (withRouter(connect(null)(Products)));

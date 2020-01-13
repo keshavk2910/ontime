@@ -1,45 +1,34 @@
 import Link from 'next/link';
+import {connect} from "react-redux";
 import Button from '@material-ui/core/Button';
 import PostAddIcon from '@material-ui/icons/PostAdd';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import {connect} from "react-redux";
 
 const ProductCard = ({post, dispatch, currentProducts}) => {
-
   let handleAdd = () => {
     dispatch({type: 'ADD_PRODUCT_TO_CART', payload: post});
   }
+  let url = post.images[0].src
 
-  let handleRemove = () => {
-    dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: post.productId});
-  }
-
-  const existingInCart = currentProducts.find(currentProduct => currentProduct.productId === post.productId)
-
+  
     return (
         <React.Fragment>
     <div className='card-container'>
     <Link href={`/product/[id]`} as={`/product/${post.slug}`}>
     <a>
-        <h1 key={post.productId} className="product-title">{post.name}</h1>
-            {post.image ?
+        <h1 key={post.id}>{post.name}</h1>
+            {post.images ?
               <div className="maximg"><img
               alt={post.name}
-              src={post.image.sourceUrl}
+              src={url}
             /></div>
             : null}</a>
             </Link>
-            {post.price ? <h3 className="price">{post.price}</h3> :""}
+            {post.price_html ? <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/> :""}
             {post.description ?<div className="content" dangerouslySetInnerHTML={{ __html: post.description }} />:""}
-            {existingInCart ? 
-      <><Button variant="contained" color="secondary" onClick={handleRemove} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button></>
-     : <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>}
+            <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>
     </div>
     
     <style jsx>{`
-    .price, .content, .product-title {
-      font-family:"Roboto", Arial, Helvetica !important;
-    }
     a {
       text-decoration:none;
       color:#000

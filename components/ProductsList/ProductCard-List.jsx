@@ -10,7 +10,7 @@ const ProductCardList = ({posts, dispatch}) => {
       <Grid container spacing={3}>
         {
         posts.map(post => 
-          <Grow key={ post.productId } in={true}>
+          <Grow key={ post.id } in={true}>
           <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
           <ProductCard post={post} dispatch={dispatch}/>
           </Grid>

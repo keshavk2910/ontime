@@ -21,8 +21,11 @@ export default function Meta() {
       display:flex;
       justify-content: space-between;
     }
-    header div.bm-menu-wrap {
+    header div.bm-menu-wrap{
       display:block!important;
+    }
+    header div.cart-Icon_wrap {
+      display:inline-block!important;
     }
     .flex-mid {
       display:flex;
@@ -39,6 +42,18 @@ export default function Meta() {
   url("fonts/51fdf8021065497210ca54837e1601e9.woff") format("woff"), /* chrome、firefox */
   url("fonts/51fdf8021065497210ca54837e1601e9.ttf") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
   url("fonts/51fdf8021065497210ca54837e1601e9.svg#Neue Einstellung Bold") format("svg"); /* iOS 4.1- */
+}
+ul.pagination {
+  margin: 15px;
+  text-align: center;
+}
+ul.pagination li {
+display:inline-block;
+padding:10px 15px;
+}
+ul.pagination li a {
+padding:5px;
+background-color:#eee;
 }
     `}</style>
     <style jsx global>{`

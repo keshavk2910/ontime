@@ -1,8 +1,10 @@
 import { slide as Menu } from 'react-burger-menu'
 import ActiveLink from './ActiveLink/ActiveLink';
 import {withRouter} from 'next/router';
+import CartIcon from './carticon';
+import Link from 'next/link';
 
-const NAV = (props) => {
+const NAV = ({router}) => {
   const items = [
     {id:1, link:'/', label:'Home'},
     {id:2, link:'/work', label:'Work'},
@@ -21,7 +23,7 @@ const handleLog = () => {
   localStorage.removeItem('loggedIn');
   localStorage.removeItem('token');
   localStorage.removeItem('niceName');
-  props.router.push(`/login`,`/login`);
+  router.push(`/login`,`/login`);
 }
     return (
     <div className="main-nav">
@@ -41,6 +43,13 @@ const handleLog = () => {
       <li>Login</li>
       </span>
       </a></ActiveLink>}
+      <Link href="/cart">
+        <a>
+          <li className="cartIcon">
+          <CartIcon/>
+          </li>
+          </a>
+          </Link>
       </ul>
 
     <div className="mobile-show">
@@ -169,4 +178,5 @@ const handleLog = () => {
     </div>
     );
 }
-export default (withRouter(NAV));
+
+export default withRouter(NAV);

@@ -1,43 +1,44 @@
+import fetch from 'isomorphic-unfetch';
 import Layout from '../../components/Layout';
+import { connect } from "react-redux";
 import Button from '@material-ui/core/Button';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 import Link from 'next/link';
-import client from './../../components/ApolloClient'
-import gql from 'graphql-tag';
-import { connect } from "react-redux";
 
-const Product = ({product, dispatch, currentProducts}) => {
-  
+const Product = ({post, dispatch, currentProducts}) => {
+
   let handleAdd = () => {
-    dispatch({type: 'ADD_PRODUCT_TO_CART', payload: product});
+    dispatch({type: 'ADD_PRODUCT_TO_CART', payload: post});
   }
   let handleRemove = () => {
-    dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: product.productId});
+    dispatch({type: 'REMOVE_ITEM_FROM_CART', payload: post.id});
   }
-  const existingInCart = currentProducts.find(currentProduct => currentProduct.productId === product.productId)
-
-const productCat = product.productCategories.nodes;
+  
+  const imgUrl = post.images[0].src
+  const existingInCart = currentProducts.find(currentProduct => currentProduct.id === post.id)
 
   return  <Layout>
     <div className="top-pad">
     <div className="single">
-      <h1>{product.name}</h1>
-      {product.image ?
+      <h1>{post.name}</h1>
+      {post.images ?
         <img
-              alt={product.name}
-              src={product.image.sourceUrl}
+              alt={post.name}
+              src={imgUrl}
             />
         : null}
-      <div className="price">{product.price}</div>
-      <div dangerouslySetInnerHTML={{ __html: product.description }} />
+        <div className="price" dangerouslySetInnerHTML={{ __html: post.price_html }}/>
+      <div dangerouslySetInnerHTML={{ __html: post.description }} />
+
       {existingInCart ? 
       <><Button variant="contained" color="secondary" onClick={handleRemove} className="primary remove" endIcon={<RemoveCircleIcon/>}>REMOVE FROM QUOTE</Button></>
      : <><Button variant="contained" color="primary" onClick={handleAdd} className="primary" endIcon={<PostAddIcon/>}>ADD TO QUOTE</Button></>}
-      <div className="categories">{productCat.map( cat =>
-        <Link key={cat.productCategoryId} href={`/product-category/[id]`} as={`/product-category/${cat.slug}`}><a>{cat.name}</a></Link>
+      <div className="categories">{post.categories.map( cat =>
+        <Link key={cat.id} href={`/product-category/[name]`} as={`/product-category/${cat.slug}`}><a>{cat.name}</a></Link>
       )}
       </div>
+     </div>
      </div>
      <style jsx>{`
      .categories {
@@ -51,48 +52,15 @@ const productCat = product.productCategories.nodes;
      
      
      `}</style>
-     </div>
         </Layout>
     
 }
 
 Product.getInitialProps = async function(context) {
   const { id } = context.query;
-
-  const PRODUCT_QUERY = gql `query( $id:String!){
-    productBy(slug: $id) {
-    description
-    image {
-      sourceUrl
-    }
-    productId
-    name
-    ... on SimpleProduct {
-      price
-    }
-    ... on VariableProduct {
-      price
-    }
-    ... on ExternalProduct {
-      price
-    }
-    productCategories {
-      nodes {
-        name
-        productCategoryId
-        slug
-      }
-    }
-  }
-}`
-
-  const result = await client.query({
-    query: PRODUCT_QUERY, 
-    variables: { id:id }
-   });
-    return {
-      product:result.data.productBy
-    }
+  const res = await fetch(`http://localhost:3000/getSingleProduct?slug=${id}`);
+  const data = await res.json();
+  return { post:data[0]}
 };
 
 const mapStateToProps = ({products}) => ({
